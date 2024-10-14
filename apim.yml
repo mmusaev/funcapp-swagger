@@ -18,6 +18,11 @@ stages:
             command: 'build'
             projects: '**/*.csproj'
 
+        - script: |
+            mkdir -p $(Build.ArtifactStagingDirectory)
+            cp -r $(Build.SourcesDirectory)/* $(Build.ArtifactStagingDirectory)
+          displayName: 'Copy files to artifact staging directory'
+
         - task: PublishBuildArtifacts@1
           inputs:
             PathtoPublish: '$(Build.ArtifactStagingDirectory)'
@@ -57,3 +62,4 @@ stages:
               --protocols https \
               --service-url 'https://funcappapim2.azurewebsites.net' \
               --subscription-required false
+
