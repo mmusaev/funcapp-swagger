@@ -62,10 +62,9 @@ stages:
             inlineScript: |
               az apim api create --service-name 'myApiManagement62stc5dcjqttq' \
               --resource-group 'marat-rg' \
-              --api-id '/subscriptions/3d6898ce-4685-4181-93df-efa0373422f3/resourceGroups/marat-rg/providers/Microsoft.Web/sites/FuncAppApim2' \
-              --path 'https://myapimanagement62stc5dcjqttq.azure-api.net' \
+              --api-id 'FuncAppApim2' \
+              --path 'funcappapim2' \
               --display-name 'FuncAppApim2' \
               --protocols https \
               --service-url 'https://funcappapim2.azurewebsites.net' \
               --subscription-required false
-
