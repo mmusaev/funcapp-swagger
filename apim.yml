@@ -13,11 +13,17 @@ stages:
       pool:
         vmImage: 'ubuntu-latest'
       steps:
+        - script: |
+            echo "Listing contents of the repository"
+            ls -R
+          displayName: 'List contents of the repository'
+
         - task: DotNetCoreCLI@2
           inputs:
             command: 'publish'
             projects: '**/*.csproj'
             arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
+            publishWebProjects: false
 
         - task: PublishBuildArtifacts@1
           inputs:
@@ -62,3 +68,4 @@ stages:
               --protocols https \
               --service-url 'https://funcappapim2.azurewebsites.net' \
               --subscription-required false
+
