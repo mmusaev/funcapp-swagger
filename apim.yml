@@ -20,29 +20,29 @@ steps:
 stages:
 - stage: Deploy
   jobs:
-  - job: DeployFunctionApp
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-    - task: AzureFunctionApp@1
-      inputs:
-        azureSubscription: 'apim'
-        appType: 'functionApp'
-        appName: 'FuncAppApim2'
-        package: '$(Pipeline.Workspace)/drop/*.zip'
-        deploymentMethod: 'zipDeploy'
+    - job: DeployFunctionApp
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+        - task: AzureFunctionApp@1
+          inputs:
+            azureSubscription: 'apim'
+            appType: 'functionApp'
+            appName: 'FuncAppApim2'
+            package: '$(Pipeline.Workspace)/drop/*.zip'
+            deploymentMethod: 'zipDeploy'
 
-    - task: AzureCLI@2
-      inputs:
-        azureSubscription: 'apim'
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
-        inlineScript: |
-         az apim api create --service-name 'myApiManagement62stc5dcjqttq' \
-         --resource-group 'marat-rg' \
-         --api-id '/subscriptions/3d6898ce-4685-4181-93df-efa0373422f3/resourceGroups/marat-rg/providers/Microsoft.Web/sites/FuncAppApim2' \
-         --path 'https://myapimanagement62stc5dcjqttq.azure-api.net' \
-         --display-name 'FuncAppApim2' \
-         --protocols https \
-         --service-url 'https://funcappapim2.azurewebsites.net' \
-         --subscription-required false
+        - task: AzureCLI@2
+          inputs:
+            azureSubscription: 'apim'
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+              az apim api create --service-name 'myApiManagement62stc5dcjqttq' \
+              --resource-group 'marat-rg' \
+              --api-id '/subscriptions/3d6898ce-4685-4181-93df-efa0373422f3/resourceGroups/marat-rg/providers/Microsoft.Web/sites/FuncAppApim2' \
+              --path 'https://myapimanagement62stc5dcjqttq.azure-api.net' \
+              --display-name 'FuncAppApim2' \
+              --protocols https \
+              --service-url 'https://funcappapim2.azurewebsites.net' \
+              --subscription-required false
