@@ -24,11 +24,19 @@ stages:
             ArtifactName: 'drop'
 
 - stage: Deploy
+  dependsOn: Build
   jobs:
     - job: DeployFunctionApp
       pool:
         vmImage: 'ubuntu-latest'
       steps:
+        - task: DownloadBuildArtifacts@0
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'drop'
+            downloadPath: '$(Pipeline.Workspace)/drop'
+
         - task: AzureFunctionApp@1
           inputs:
             azureSubscription: 'apim'
@@ -51,3 +59,4 @@ stages:
               --protocols https \
               --service-url 'https://funcappapim2.azurewebsites.net' \
               --subscription-required false
+
