@@ -30,12 +30,10 @@ stages:
       pool:
         vmImage: 'ubuntu-latest'
       steps:
-        - task: DownloadBuildArtifacts@0
+        - task: DownloadPipelineArtifact@2
           inputs:
-            buildType: 'current'
-            downloadType: 'single'
-            artifactName: 'drop'
-            downloadPath: '$(Pipeline.Workspace)/drop'
+            artifact: 'drop'
+            path: '$(Pipeline.Workspace)/drop'
 
         - task: AzureFunctionApp@1
           inputs:
@@ -59,4 +57,3 @@ stages:
               --protocols https \
               --service-url 'https://funcappapim2.azurewebsites.net' \
               --subscription-required false
-
